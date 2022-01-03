@@ -1,0 +1,64 @@
+@model google_sheet_api_service.Models.Story
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Story</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="gId" class="control-label"></label>
+                <input asp-for="gId" class="form-control" />
+                <span asp-validation-for="gId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="stroyName" class="control-label"></label>
+                <input asp-for="stroyName" class="form-control" />
+                <span asp-validation-for="stroyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="characterGid" class="control-label"></label>
+                <input asp-for="characterGid" class="form-control" />
+                <span asp-validation-for="characterGid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="characterName" class="control-label"></label>
+                <input asp-for="characterName" class="form-control" />
+                <span asp-validation-for="characterName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="buildingName" class="control-label"></label>
+                <input asp-for="buildingName" class="form-control" />
+                <span asp-validation-for="buildingName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="buildingLevel" class="control-label"></label>
+                <input asp-for="buildingLevel" class="form-control" />
+                <span asp-validation-for="buildingLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="buildingGid" class="control-label"></label>
+                <input asp-for="buildingGid" class="form-control" />
+                <span asp-validation-for="buildingGid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

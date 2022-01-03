@@ -1,0 +1,79 @@
+@model google_sheet_api_service.Models.StoryDialogue
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>StoryDialogue</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="storyName" class="control-label"></label>
+                <input asp-for="storyName" class="form-control" />
+                <span asp-validation-for="storyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="stroyGid" class="control-label"></label>
+                <input asp-for="stroyGid" class="form-control" />
+                <span asp-validation-for="stroyGid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="characterName" class="control-label"></label>
+                <input asp-for="characterName" class="form-control" />
+                <span asp-validation-for="characterName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="dialogueSortIndex" class="control-label"></label>
+                <input asp-for="dialogueSortIndex" class="form-control" />
+                <span asp-validation-for="dialogueSortIndex" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="content" class="control-label"></label>
+                <input asp-for="content" class="form-control" />
+                <span asp-validation-for="content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="contentKey" class="control-label"></label>
+                <input asp-for="contentKey" class="form-control" />
+                <span asp-validation-for="contentKey" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="optionDialogue01" class="control-label"></label>
+                <input asp-for="optionDialogue01" class="form-control" />
+                <span asp-validation-for="optionDialogue01" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="optionDialogue02" class="control-label"></label>
+                <input asp-for="optionDialogue02" class="form-control" />
+                <span asp-validation-for="optionDialogue02" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="optionDialogue01Key" class="control-label"></label>
+                <input asp-for="optionDialogue01Key" class="form-control" />
+                <span asp-validation-for="optionDialogue01Key" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="optionDialogue02Key" class="control-label"></label>
+                <input asp-for="optionDialogue02Key" class="form-control" />
+                <span asp-validation-for="optionDialogue02Key" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

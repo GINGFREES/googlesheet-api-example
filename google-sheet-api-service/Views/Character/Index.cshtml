@@ -1,0 +1,83 @@
+@model IEnumerable<google_sheet_api_service.Models.Character>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.gId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.islandGid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.unlockedBuildingGid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.unlockedBuildingName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.unlockedBuildingLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nameKey)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.descriptionKey)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.imageKey)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.gId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.islandGid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.unlockedBuildingGid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.unlockedBuildingName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.unlockedBuildingLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nameKey)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.descriptionKey)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.imageKey)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

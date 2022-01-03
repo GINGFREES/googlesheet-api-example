@@ -1,0 +1,74 @@
+@model google_sheet_api_service.Models.Building
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Building</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="gId" class="control-label"></label>
+                <input asp-for="gId" class="form-control" />
+                <span asp-validation-for="gId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="name" class="control-label"></label>
+                <input asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="islandGid" class="control-label"></label>
+                <input asp-for="islandGid" class="form-control" />
+                <span asp-validation-for="islandGid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="islandName" class="control-label"></label>
+                <input asp-for="islandName" class="form-control" />
+                <span asp-validation-for="islandName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="maxLevel" class="control-label"></label>
+                <input asp-for="maxLevel" class="form-control" />
+                <span asp-validation-for="maxLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="imageKey" class="control-label"></label>
+                <input asp-for="imageKey" class="form-control" />
+                <span asp-validation-for="imageKey" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="buildingNameKey" class="control-label"></label>
+                <input asp-for="buildingNameKey" class="form-control" />
+                <span asp-validation-for="buildingNameKey" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="buildingDescriptionKey" class="control-label"></label>
+                <input asp-for="buildingDescriptionKey" class="form-control" />
+                <span asp-validation-for="buildingDescriptionKey" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="alreadySettingBuildingLevelCount" class="control-label"></label>
+                <input asp-for="alreadySettingBuildingLevelCount" class="form-control" />
+                <span asp-validation-for="alreadySettingBuildingLevelCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

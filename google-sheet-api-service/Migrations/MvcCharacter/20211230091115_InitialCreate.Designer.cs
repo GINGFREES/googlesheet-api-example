@@ -6,46 +6,58 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace google_sheet_api_service.Migrations
+namespace google_sheet_api_service.Migrations.MvcCharacter
 {
-    [DbContext(typeof(MvcTestFileContext))]
-    [Migration("20211206092523_InitialCreate")]
+    [DbContext(typeof(MvcCharacterContext))]
+    [Migration("20211230091115_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.1");
 
-            modelBuilder.Entity("google_sheet_api_service.Models.TestFile", b =>
+            modelBuilder.Entity("google_sheet_api_service.Models.Character", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Test1")
+                    b.Property<string>("descriptionKey")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Test2")
+                    b.Property<int>("gId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("imageKey")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Test3")
+                    b.Property<int>("islandGid")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Test4")
+                    b.Property<string>("nameKey")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Test5")
+                    b.Property<int>("unlockedBuildingGid")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("unlockedBuildingLevel")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("unlockedBuildingName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("TestFile");
+                    b.ToTable("Character");
                 });
 #pragma warning restore 612, 618
         }

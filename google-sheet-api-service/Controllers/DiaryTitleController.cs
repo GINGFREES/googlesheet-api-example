@@ -1,3 +1,4 @@
+#nullable disable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,35 +8,34 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using google_sheet_api_service.Models;
 using google_sheet_api_service.Controllers.Logics;
-
-
-
+using Newtonsoft.Json;
 
 namespace google_sheet_api_service.Controllers
 {
-    public class TestFileController : Controller
+    public class DiaryTitleController : Controller
     {
-        private readonly MvcTestFileContext _context;
+        private readonly MvcDiaryTitleContext _context;
+        private DiaryTitleLogic _logic;
 
-        public TestFileController(MvcTestFileContext context)
+        public DiaryTitleController(MvcDiaryTitleContext context)
         {
             _context = context;
+            _logic = new DiaryTitleLogic();
         }
 
-        public async Task<IActionResult> RequestGoogleSheetApi()
-        {
-            TestFileLogic logic = new TestFileLogic();
-            ViewData["result"] = logic.RequestGoolgSheetApi();
-            return View(await _context.TestFile.ToListAsync());
-        }
-
-        // GET: TestFile
+        // GET: DiaryTitle
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TestFile.ToListAsync());
+            List<DiaryTitle> list = _logic.RequestDiaryTitleData();
+            foreach (var target in list)
+            {
+                await CreateOrUpdate(target);
+                Console.WriteLine($"Create or update {JsonConvert.SerializeObject(target)}");
+            }
+            return View(await _context.DiaryTitle.ToListAsync());
         }
 
-        // GET: TestFile/Details/5
+        // GET: DiaryTitle/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,39 +43,60 @@ namespace google_sheet_api_service.Controllers
                 return NotFound();
             }
 
-            var testFile = await _context.TestFile
+            var diaryTitle = await _context.DiaryTitle
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (testFile == null)
+            if (diaryTitle == null)
             {
                 return NotFound();
             }
 
-            return View(testFile);
+            return View(diaryTitle);
         }
 
-        // GET: TestFile/Create
+        // GET: DiaryTitle/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: TestFile/Create
+        private async Task CreateOrUpdate(
+            [Bind("Id,diaryTitleName,diaryTitleKey")] DiaryTitle diaryTitle
+        )
+        {
+            DiaryTitle target = await _context.DiaryTitle.FindAsync(diaryTitle.Id);
+            if (target == null)
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(diaryTitle);
+                }
+            }
+            else
+            {
+                _context.DiaryTitle.Remove(target);
+                _context.Add(diaryTitle);
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+        // POST: DiaryTitle/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Test1,Test2,Test3,Test4,Test5")] TestFile testFile)
+        public async Task<IActionResult> Create([Bind("Id,diaryTitleName,diaryTitleKey")] DiaryTitle diaryTitle)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(testFile);
+                _context.Add(diaryTitle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(testFile);
+            return View(diaryTitle);
         }
 
-        // GET: TestFile/Edit/5
+        // GET: DiaryTitle/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -83,22 +104,22 @@ namespace google_sheet_api_service.Controllers
                 return NotFound();
             }
 
-            var testFile = await _context.TestFile.FindAsync(id);
-            if (testFile == null)
+            var diaryTitle = await _context.DiaryTitle.FindAsync(id);
+            if (diaryTitle == null)
             {
                 return NotFound();
             }
-            return View(testFile);
+            return View(diaryTitle);
         }
 
-        // POST: TestFile/Edit/5
+        // POST: DiaryTitle/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Test1,Test2,Test3,Test4,Test5")] TestFile testFile)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,diaryTitleName,diaryTitleKey")] DiaryTitle diaryTitle)
         {
-            if (id != testFile.Id)
+            if (id != diaryTitle.Id)
             {
                 return NotFound();
             }
@@ -107,12 +128,12 @@ namespace google_sheet_api_service.Controllers
             {
                 try
                 {
-                    _context.Update(testFile);
+                    _context.Update(diaryTitle);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TestFileExists(testFile.Id))
+                    if (!DiaryTitleExists(diaryTitle.Id))
                     {
                         return NotFound();
                     }
@@ -123,10 +144,10 @@ namespace google_sheet_api_service.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(testFile);
+            return View(diaryTitle);
         }
 
-        // GET: TestFile/Delete/5
+        // GET: DiaryTitle/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,30 +155,30 @@ namespace google_sheet_api_service.Controllers
                 return NotFound();
             }
 
-            var testFile = await _context.TestFile
+            var diaryTitle = await _context.DiaryTitle
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (testFile == null)
+            if (diaryTitle == null)
             {
                 return NotFound();
             }
 
-            return View(testFile);
+            return View(diaryTitle);
         }
 
-        // POST: TestFile/Delete/5
+        // POST: DiaryTitle/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var testFile = await _context.TestFile.FindAsync(id);
-            _context.TestFile.Remove(testFile);
+            var diaryTitle = await _context.DiaryTitle.FindAsync(id);
+            _context.DiaryTitle.Remove(diaryTitle);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TestFileExists(int id)
+        private bool DiaryTitleExists(int id)
         {
-            return _context.TestFile.Any(e => e.Id == id);
+            return _context.DiaryTitle.Any(e => e.Id == id);
         }
     }
 }

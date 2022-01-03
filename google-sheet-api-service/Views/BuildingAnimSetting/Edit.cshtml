@@ -1,0 +1,49 @@
+@model google_sheet_api_service.Models.BuildingAnimSetting
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>BuildingAnimSetting</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="buildingSize" class="control-label"></label>
+                <input asp-for="buildingSize" class="form-control" />
+                <span asp-validation-for="buildingSize" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="levelUpAnimName" class="control-label"></label>
+                <input asp-for="levelUpAnimName" class="form-control" />
+                <span asp-validation-for="levelUpAnimName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="checkAnimValue" class="control-label"></label>
+                <input asp-for="checkAnimValue" class="form-control" />
+                <span asp-validation-for="checkAnimValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="levelUpAnimValue" class="control-label"></label>
+                <input asp-for="levelUpAnimValue" class="form-control" />
+                <span asp-validation-for="levelUpAnimValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

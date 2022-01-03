@@ -1,3 +1,4 @@
+#nullable disable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,35 +8,34 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using google_sheet_api_service.Models;
 using google_sheet_api_service.Controllers.Logics;
-
-
-
+using Newtonsoft.Json;
 
 namespace google_sheet_api_service.Controllers
 {
-    public class TestFileController : Controller
+    public class CharacterController : Controller
     {
-        private readonly MvcTestFileContext _context;
+        private readonly MvcCharacterContext _context;
+        private CharacterLogic _logic;
 
-        public TestFileController(MvcTestFileContext context)
+        public CharacterController(MvcCharacterContext context)
         {
             _context = context;
+            _logic = new CharacterLogic();
         }
 
-        public async Task<IActionResult> RequestGoogleSheetApi()
-        {
-            TestFileLogic logic = new TestFileLogic();
-            ViewData["result"] = logic.RequestGoolgSheetApi();
-            return View(await _context.TestFile.ToListAsync());
-        }
-
-        // GET: TestFile
+        // GET: Character
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TestFile.ToListAsync());
+            List<Character> list = _logic.RequestCharacterLogicData();
+            foreach (Character target in list)
+            {
+                await CreateOrUpdate(target);
+                Console.WriteLine($"Create or update {JsonConvert.SerializeObject(target)}");
+            }
+            return View(await _context.Character.ToListAsync());
         }
 
-        // GET: TestFile/Details/5
+        // GET: Character/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,39 +43,60 @@ namespace google_sheet_api_service.Controllers
                 return NotFound();
             }
 
-            var testFile = await _context.TestFile
+            var character = await _context.Character
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (testFile == null)
+            if (character == null)
             {
                 return NotFound();
             }
 
-            return View(testFile);
+            return View(character);
         }
 
-        // GET: TestFile/Create
+        // GET: Character/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: TestFile/Create
+        private async Task CreateOrUpdate(
+            [Bind("Id,gId,name,islandGid,unlockedBuildingGid,unlockedBuildingName,unlockedBuildingLevel,nameKey,descriptionKey,imageKey")] Character character
+        )
+        {
+            Character target = await _context.Character.FindAsync(character.Id);
+            if (target == null)
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(character);
+                }
+            }
+            else
+            {
+                _context.Character.Remove(target);
+                _context.Add(character);
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+        // POST: Character/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Test1,Test2,Test3,Test4,Test5")] TestFile testFile)
+        public async Task<IActionResult> Create([Bind("Id,gId,name,islandGid,unlockedBuildingGid,unlockedBuildingName,unlockedBuildingLevel,nameKey,descriptionKey,imageKey")] Character character)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(testFile);
+                _context.Add(character);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(testFile);
+            return View(character);
         }
 
-        // GET: TestFile/Edit/5
+        // GET: Character/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -83,22 +104,22 @@ namespace google_sheet_api_service.Controllers
                 return NotFound();
             }
 
-            var testFile = await _context.TestFile.FindAsync(id);
-            if (testFile == null)
+            var character = await _context.Character.FindAsync(id);
+            if (character == null)
             {
                 return NotFound();
             }
-            return View(testFile);
+            return View(character);
         }
 
-        // POST: TestFile/Edit/5
+        // POST: Character/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Test1,Test2,Test3,Test4,Test5")] TestFile testFile)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,gId,name,islandGid,unlockedBuildingGid,unlockedBuildingName,unlockedBuildingLevel,nameKey,descriptionKey,imageKey")] Character character)
         {
-            if (id != testFile.Id)
+            if (id != character.Id)
             {
                 return NotFound();
             }
@@ -107,12 +128,12 @@ namespace google_sheet_api_service.Controllers
             {
                 try
                 {
-                    _context.Update(testFile);
+                    _context.Update(character);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TestFileExists(testFile.Id))
+                    if (!CharacterExists(character.Id))
                     {
                         return NotFound();
                     }
@@ -123,10 +144,10 @@ namespace google_sheet_api_service.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(testFile);
+            return View(character);
         }
 
-        // GET: TestFile/Delete/5
+        // GET: Character/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,30 +155,30 @@ namespace google_sheet_api_service.Controllers
                 return NotFound();
             }
 
-            var testFile = await _context.TestFile
+            var character = await _context.Character
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (testFile == null)
+            if (character == null)
             {
                 return NotFound();
             }
 
-            return View(testFile);
+            return View(character);
         }
 
-        // POST: TestFile/Delete/5
+        // POST: Character/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var testFile = await _context.TestFile.FindAsync(id);
-            _context.TestFile.Remove(testFile);
+            var character = await _context.Character.FindAsync(id);
+            _context.Character.Remove(character);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TestFileExists(int id)
+        private bool CharacterExists(int id)
         {
-            return _context.TestFile.Any(e => e.Id == id);
+            return _context.Character.Any(e => e.Id == id);
         }
     }
 }

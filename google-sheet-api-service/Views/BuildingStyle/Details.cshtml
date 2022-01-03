@@ -1,0 +1,60 @@
+@model google_sheet_api_service.Models.BuildingStyle
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>BuildingStyle</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.gId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.gId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.buildingStyleName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.buildingStyleName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.islandGid)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.islandGid)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.buildingGid)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.buildingGid)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.buildingName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.buildingName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.minLevel)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.minLevel)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.imageKey)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.imageKey)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

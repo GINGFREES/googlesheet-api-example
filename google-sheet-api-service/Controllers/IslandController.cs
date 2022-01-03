@@ -1,3 +1,4 @@
+#nullable disable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,35 +8,34 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using google_sheet_api_service.Models;
 using google_sheet_api_service.Controllers.Logics;
-
-
-
+using Newtonsoft.Json;
 
 namespace google_sheet_api_service.Controllers
 {
-    public class TestFileController : Controller
+    public class IslandController : Controller
     {
-        private readonly MvcTestFileContext _context;
+        private readonly MvcIslandContext _context;
+        private IslandLogic _logic;
 
-        public TestFileController(MvcTestFileContext context)
+        public IslandController(MvcIslandContext context)
         {
             _context = context;
+            _logic = new IslandLogic();
         }
 
-        public async Task<IActionResult> RequestGoogleSheetApi()
-        {
-            TestFileLogic logic = new TestFileLogic();
-            ViewData["result"] = logic.RequestGoolgSheetApi();
-            return View(await _context.TestFile.ToListAsync());
-        }
-
-        // GET: TestFile
+        // GET: Island
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TestFile.ToListAsync());
+            List<Island> list = _logic.RequestIslandData();
+            foreach (var target in list)
+            {
+                await CreateOrUpdate(target);
+                Console.WriteLine($"Create or update {JsonConvert.SerializeObject(target)}");
+            }
+            return View(await _context.Island.ToListAsync());
         }
 
-        // GET: TestFile/Details/5
+        // GET: Island/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,39 +43,60 @@ namespace google_sheet_api_service.Controllers
                 return NotFound();
             }
 
-            var testFile = await _context.TestFile
+            var island = await _context.Island
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (testFile == null)
+            if (island == null)
             {
                 return NotFound();
             }
 
-            return View(testFile);
+            return View(island);
         }
 
-        // GET: TestFile/Create
+        // GET: Island/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: TestFile/Create
+        private async Task CreateOrUpdate(
+            [Bind("Id,gId,islandName,imageKey,nameKey,descriptionKey,conclusionKey")] Island island
+        )
+        {
+            Island target = await _context.Island.FindAsync(island.Id);
+            if (target == null)
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(island);
+                }
+            }
+            else
+            {
+                _context.Island.Remove(target);
+                _context.Add(island);
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+        // POST: Island/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Test1,Test2,Test3,Test4,Test5")] TestFile testFile)
+        public async Task<IActionResult> Create([Bind("Id,gId,islandName,imageKey,nameKey,descriptionKey,conclusionKey")] Island island)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(testFile);
+                _context.Add(island);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(testFile);
+            return View(island);
         }
 
-        // GET: TestFile/Edit/5
+        // GET: Island/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -83,22 +104,22 @@ namespace google_sheet_api_service.Controllers
                 return NotFound();
             }
 
-            var testFile = await _context.TestFile.FindAsync(id);
-            if (testFile == null)
+            var island = await _context.Island.FindAsync(id);
+            if (island == null)
             {
                 return NotFound();
             }
-            return View(testFile);
+            return View(island);
         }
 
-        // POST: TestFile/Edit/5
+        // POST: Island/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Test1,Test2,Test3,Test4,Test5")] TestFile testFile)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,gId,islandName,imageKey,nameKey,descriptionKey,conclusionKey")] Island island)
         {
-            if (id != testFile.Id)
+            if (id != island.Id)
             {
                 return NotFound();
             }
@@ -107,12 +128,12 @@ namespace google_sheet_api_service.Controllers
             {
                 try
                 {
-                    _context.Update(testFile);
+                    _context.Update(island);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TestFileExists(testFile.Id))
+                    if (!IslandExists(island.Id))
                     {
                         return NotFound();
                     }
@@ -123,10 +144,10 @@ namespace google_sheet_api_service.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(testFile);
+            return View(island);
         }
 
-        // GET: TestFile/Delete/5
+        // GET: Island/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,30 +155,30 @@ namespace google_sheet_api_service.Controllers
                 return NotFound();
             }
 
-            var testFile = await _context.TestFile
+            var island = await _context.Island
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (testFile == null)
+            if (island == null)
             {
                 return NotFound();
             }
 
-            return View(testFile);
+            return View(island);
         }
 
-        // POST: TestFile/Delete/5
+        // POST: Island/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var testFile = await _context.TestFile.FindAsync(id);
-            _context.TestFile.Remove(testFile);
+            var island = await _context.Island.FindAsync(id);
+            _context.Island.Remove(island);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TestFileExists(int id)
+        private bool IslandExists(int id)
         {
-            return _context.TestFile.Any(e => e.Id == id);
+            return _context.Island.Any(e => e.Id == id);
         }
     }
 }

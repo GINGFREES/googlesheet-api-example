@@ -1,0 +1,60 @@
+@model google_sheet_api_service.Models.BuildingLevelSize
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>BuildingLevelSize</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.buildingName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.buildingName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.buildingLevel)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.buildingLevel)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.islandGid)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.islandGid)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.buildingGid)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.buildingGid)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.checkAnim)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.checkAnim)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.levelUpAnim)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.levelUpAnim)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.buildingSize)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.buildingSize)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

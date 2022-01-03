@@ -1,0 +1,89 @@
+@model IEnumerable<google_sheet_api_service.Models.StoryDialogue>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.storyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.stroyGid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.characterName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dialogueSortIndex)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.contentKey)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.optionDialogue01)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.optionDialogue02)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.optionDialogue01Key)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.optionDialogue02Key)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.storyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.stroyGid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.characterName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dialogueSortIndex)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.contentKey)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.optionDialogue01)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.optionDialogue02)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.optionDialogue01Key)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.optionDialogue02Key)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

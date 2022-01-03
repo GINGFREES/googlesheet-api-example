@@ -1,0 +1,59 @@
+@model google_sheet_api_service.Models.Island
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Island</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="gId" class="control-label"></label>
+                <input asp-for="gId" class="form-control" />
+                <span asp-validation-for="gId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="islandName" class="control-label"></label>
+                <input asp-for="islandName" class="form-control" />
+                <span asp-validation-for="islandName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="imageKey" class="control-label"></label>
+                <input asp-for="imageKey" class="form-control" />
+                <span asp-validation-for="imageKey" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="nameKey" class="control-label"></label>
+                <input asp-for="nameKey" class="form-control" />
+                <span asp-validation-for="nameKey" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="descriptionKey" class="control-label"></label>
+                <input asp-for="descriptionKey" class="form-control" />
+                <span asp-validation-for="descriptionKey" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="conclusionKey" class="control-label"></label>
+                <input asp-for="conclusionKey" class="form-control" />
+                <span asp-validation-for="conclusionKey" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

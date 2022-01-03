@@ -1,0 +1,42 @@
+@model google_sheet_api_service.Models.BuildingAnimSetting
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>BuildingAnimSetting</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.buildingSize)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.buildingSize)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.levelUpAnimName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.levelUpAnimName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.checkAnimValue)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.checkAnimValue)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.levelUpAnimValue)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.levelUpAnimValue)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
