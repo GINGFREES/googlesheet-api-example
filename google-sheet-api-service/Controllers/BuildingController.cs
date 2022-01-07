@@ -61,6 +61,9 @@ namespace google_sheet_api_service.Controllers
             return View();
         }
 
+        public string RequestBuildingJson()
+            => JsonConvert.SerializeObject(_logic.RequestBuildingData());
+
         public async Task<IActionResult> RequestGoogleSheetApi()
         {
             ViewData["result"] = _logic.RequestGoolgSheetApi();

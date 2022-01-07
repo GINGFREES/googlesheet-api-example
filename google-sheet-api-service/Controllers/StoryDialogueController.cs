@@ -59,6 +59,9 @@ namespace google_sheet_api_service.Controllers
             return View();
         }
 
+        public string RequestStoryDialogueJson()
+            => JsonConvert.SerializeObject(_logic.RequestStoryDialogueData());
+
         private async Task CreateOrUpdate(
             [Bind("Id,storyName,stroyGid,characterName,dialogueSortIndex,content,contentKey,optionDialogue01,optionDialogue02,optionDialogue01Key,optionDialogue02Key")] StoryDialogue storyDialogue
         )

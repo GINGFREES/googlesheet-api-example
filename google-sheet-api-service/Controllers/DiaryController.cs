@@ -80,6 +80,9 @@ namespace google_sheet_api_service.Controllers
             await _context.SaveChangesAsync();
         }
 
+        public string RequestDiaryJson()
+            => JsonConvert.SerializeObject(_logic.RequestDiaryData());
+
         // POST: Diary/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

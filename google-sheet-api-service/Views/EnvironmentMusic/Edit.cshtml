@@ -1,0 +1,79 @@
+@model google_sheet_api_service.Models.EnvironmentMusic
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>EnvironmentMusic</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="islandGid" class="control-label"></label>
+                <input asp-for="islandGid" class="form-control" />
+                <span asp-validation-for="islandGid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="islandName" class="control-label"></label>
+                <input asp-for="islandName" class="form-control" />
+                <span asp-validation-for="islandName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="music" class="control-label"></label>
+                <input asp-for="music" class="form-control" />
+                <span asp-validation-for="music" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="isLoop" /> @Html.DisplayNameFor(model => model.isLoop)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="startDelay" class="control-label"></label>
+                <input asp-for="startDelay" class="form-control" />
+                <span asp-validation-for="startDelay" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="isFadeLoop" /> @Html.DisplayNameFor(model => model.isFadeLoop)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="fadeLoopDelay" class="control-label"></label>
+                <input asp-for="fadeLoopDelay" class="form-control" />
+                <span asp-validation-for="fadeLoopDelay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fadeOutDelay" class="control-label"></label>
+                <input asp-for="fadeOutDelay" class="form-control" />
+                <span asp-validation-for="fadeOutDelay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fadeInOutDuration" class="control-label"></label>
+                <input asp-for="fadeInOutDuration" class="form-control" />
+                <span asp-validation-for="fadeInOutDuration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fadeInOutEase" class="control-label"></label>
+                <input asp-for="fadeInOutEase" class="form-control" />
+                <span asp-validation-for="fadeInOutEase" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

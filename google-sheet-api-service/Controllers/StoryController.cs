@@ -60,6 +60,9 @@ namespace google_sheet_api_service.Controllers
             return View();
         }
 
+        public string RequestStoryJson()
+            => JsonConvert.SerializeObject(_logic.RequestStoryData());
+
         private async Task CreateOrUpdate(
             [Bind("Id,gId,stroyName,characterGid,characterName,buildingName,buildingLevel,buildingGid")] Story story
         )

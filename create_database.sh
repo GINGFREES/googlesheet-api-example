@@ -8,7 +8,8 @@ MODEL_LIST=("Building" \
 "DiaryTitle" \
 "Island" \
 "Story" \
-"StoryDialogue")
+"StoryDialogue" \
+"EnvironmentMusic")
 
 cd google-sheet-api-service
 
@@ -23,7 +24,7 @@ cd google-sheet-api-service
 #     dotnet ef database update --context ${MVC_CONTEXT_NAME}
 # done
 
-MODEL_NAME="BuildingAnimSetting"
+MODEL_NAME="EnvironmentMusic"
 rm -rf Migrations/Mvc${MODEL_NAME}*
 MVC_CONTEXT_NAME="Mvc${MODEL_NAME}Context"
 

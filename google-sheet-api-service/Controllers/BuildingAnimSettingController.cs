@@ -59,6 +59,9 @@ namespace google_sheet_api_service.Controllers
             return View();
         }
 
+        public string RequestBuildingAnimSettingJson()
+            => JsonConvert.SerializeObject(_logic.RequestBuildingAnimSettingData());
+
         private async Task CreaetOrUpdate(
             [Bind("Id,buildingSize,levelUpAnimName,checkAnimValue,levelUpAnimValue")] BuildingAnimSetting buildingAnimSetting
         )

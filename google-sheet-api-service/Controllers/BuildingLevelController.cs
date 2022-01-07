@@ -59,11 +59,14 @@ namespace google_sheet_api_service.Controllers
             return View();
         }
 
+        public string RequestBuildingLevelJson()
+            => JsonConvert.SerializeObject(_buildingLevelLogic.RequestBuildingLevelData());
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task CleanUp()
         {
-            await _context.Database.ExecuteSqlRawAsync("DELETE * FROM Building");
+            await _context.Database.ExecuteSqlRawAsync("DELETE FROM Building");
         }
 
         private async Task CreateOrUpdate([Bind("Id,buildingName,buildingLevel")] BuildingLevel buildingLevel)

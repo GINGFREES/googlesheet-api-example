@@ -59,6 +59,9 @@ namespace google_sheet_api_service.Controllers
             return View();
         }
 
+        public string RequestCharacterJson()
+            => JsonConvert.SerializeObject(_logic.RequestCharacterLogicData());
+
         private async Task CreateOrUpdate(
             [Bind("Id,gId,name,islandGid,unlockedBuildingGid,unlockedBuildingName,unlockedBuildingLevel,nameKey,descriptionKey,imageKey")] Character character
         )

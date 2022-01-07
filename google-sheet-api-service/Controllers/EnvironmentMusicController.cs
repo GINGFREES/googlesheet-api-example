@@ -1,4 +1,5 @@
 #nullable disable
+using System.Runtime.InteropServices.ComTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,30 +13,30 @@ using Newtonsoft.Json;
 
 namespace google_sheet_api_service.Controllers
 {
-    public class BuildingLevelSizeController : Controller
+    public class EnvironmentMusicController : Controller
     {
-        private readonly MvcBuildingLevelSizeContext _context;
-        private BuildingLevelSizeLogic _logic;
+        private readonly MvcEnvironmentMusicContext _context;
+        private EnvironmentMusicLogic _logic;
 
-        public BuildingLevelSizeController(MvcBuildingLevelSizeContext context)
+        public EnvironmentMusicController(MvcEnvironmentMusicContext context)
         {
             _context = context;
-            _logic = new BuildingLevelSizeLogic();
+            _logic = new EnvironmentMusicLogic();
         }
 
-        // GET: BuildingLevelSize
+        // GET: EnvironmentMusic
         public async Task<IActionResult> Index()
         {
-            List<BuildingLevelSize> list = _logic.RequestBuildingLevelSizeData();
-            foreach (BuildingLevelSize target in list)
+            var list = _logic.RequestEnvironmentMusic();
+            foreach (var target in list)
             {
                 await CreateOrUpdate(target);
-                Console.WriteLine($"Create or update :{JsonConvert.SerializeObject(target)}");
+                Console.WriteLine($"Create or update {JsonConvert.SerializeObject(target)}");
             }
-            return View(await _context.BuildingLevelSize.ToListAsync());
+            return View(await _context.EnvironmentMusic.ToListAsync());
         }
 
-        // GET: BuildingLevelSize/Details/5
+        // GET: EnvironmentMusic/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,64 +44,62 @@ namespace google_sheet_api_service.Controllers
                 return NotFound();
             }
 
-            var buildingLevelSize = await _context.BuildingLevelSize
+            var environmentMusic = await _context.EnvironmentMusic
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (buildingLevelSize == null)
+            if (environmentMusic == null)
             {
                 return NotFound();
             }
 
-            return View(buildingLevelSize);
+            return View(environmentMusic);
         }
 
-        private async Task CreateOrUpdate(
-            [Bind("Id,buildingName,buildingLevel,islandGid,buildingGid,checkAnim,levelUpAnim,buildingSize")] BuildingLevelSize buildingLevelSize
-        )
-        {
-            BuildingLevelSize target = await _context.BuildingLevelSize.FindAsync(buildingLevelSize.Id);
-            if (target == null)
-            {
-                if (ModelState.IsValid)
-                {
-                    _context.Add(buildingLevelSize);
-                }
-            }
+        public string RquestEnvironmentMusicJson()
+            => JsonConvert.SerializeObject(_logic.RequestEnvironmentMusic());
 
-            if (target != null)
-            {
-                _context.BuildingLevelSize.Remove(target);
-                _context.Add(buildingLevelSize);
-            }
-
-            await _context.SaveChangesAsync();
-        }
-
-        // GET: BuildingLevelSize/Create
+        // GET: EnvironmentMusic/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        public string RequestBuildingLevelSizeJson()
-            => JsonConvert.SerializeObject(_logic.RequestBuildingLevelSizeData());
+        private async Task CreateOrUpdate(
+            [Bind("Id,islandGid,islandName,music,isLoop,startDelay,isFadeLoop,fadeLoopDelay,fadeOutDelay,fadeInOutDuration,fadeInOutEase")] EnvironmentMusic environmentMusic
+        )
+        {
+            var target = await _context.EnvironmentMusic.FindAsync(environmentMusic.Id);
+            if (target == null)
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(environmentMusic);
+                }
+            }
+            else
+            {
+                _context.EnvironmentMusic.Remove(target);
+                _context.Add(environmentMusic);
+            }
+            await _context.SaveChangesAsync();
+        }
 
-        // POST: BuildingLevelSize/Create
+        // POST: EnvironmentMusic/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,buildingName,buildingLevel,islandGid,buildingGid,checkAnim,levelUpAnim,buildingSize")] BuildingLevelSize buildingLevelSize)
+        public async Task<IActionResult> Create([Bind("Id,islandGid,islandName,music,isLoop,startDelay,isFadeLoop,fadeLoopDelay,fadeOutDelay,fadeInOutDuration,fadeInOutEase")] EnvironmentMusic environmentMusic)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(buildingLevelSize);
+                _context.Add(environmentMusic);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(buildingLevelSize);
+            return View(environmentMusic);
         }
 
-        // GET: BuildingLevelSize/Edit/5
+        // GET: EnvironmentMusic/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -108,22 +107,22 @@ namespace google_sheet_api_service.Controllers
                 return NotFound();
             }
 
-            var buildingLevelSize = await _context.BuildingLevelSize.FindAsync(id);
-            if (buildingLevelSize == null)
+            var environmentMusic = await _context.EnvironmentMusic.FindAsync(id);
+            if (environmentMusic == null)
             {
                 return NotFound();
             }
-            return View(buildingLevelSize);
+            return View(environmentMusic);
         }
 
-        // POST: BuildingLevelSize/Edit/5
+        // POST: EnvironmentMusic/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,buildingName,buildingLevel,islandGid,buildingGid,checkAnim,levelUpAnim,buildingSize")] BuildingLevelSize buildingLevelSize)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,islandGid,islandName,music,isLoop,startDelay,isFadeLoop,fadeLoopDelay,fadeOutDelay,fadeInOutDuration,fadeInOutEase")] EnvironmentMusic environmentMusic)
         {
-            if (id != buildingLevelSize.Id)
+            if (id != environmentMusic.Id)
             {
                 return NotFound();
             }
@@ -132,12 +131,12 @@ namespace google_sheet_api_service.Controllers
             {
                 try
                 {
-                    _context.Update(buildingLevelSize);
+                    _context.Update(environmentMusic);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BuildingLevelSizeExists(buildingLevelSize.Id))
+                    if (!EnvironmentMusicExists(environmentMusic.Id))
                     {
                         return NotFound();
                     }
@@ -148,10 +147,10 @@ namespace google_sheet_api_service.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(buildingLevelSize);
+            return View(environmentMusic);
         }
 
-        // GET: BuildingLevelSize/Delete/5
+        // GET: EnvironmentMusic/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -159,30 +158,30 @@ namespace google_sheet_api_service.Controllers
                 return NotFound();
             }
 
-            var buildingLevelSize = await _context.BuildingLevelSize
+            var environmentMusic = await _context.EnvironmentMusic
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (buildingLevelSize == null)
+            if (environmentMusic == null)
             {
                 return NotFound();
             }
 
-            return View(buildingLevelSize);
+            return View(environmentMusic);
         }
 
-        // POST: BuildingLevelSize/Delete/5
+        // POST: EnvironmentMusic/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var buildingLevelSize = await _context.BuildingLevelSize.FindAsync(id);
-            _context.BuildingLevelSize.Remove(buildingLevelSize);
+            var environmentMusic = await _context.EnvironmentMusic.FindAsync(id);
+            _context.EnvironmentMusic.Remove(environmentMusic);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BuildingLevelSizeExists(int id)
+        private bool EnvironmentMusicExists(int id)
         {
-            return _context.BuildingLevelSize.Any(e => e.Id == id);
+            return _context.EnvironmentMusic.Any(e => e.Id == id);
         }
     }
 }

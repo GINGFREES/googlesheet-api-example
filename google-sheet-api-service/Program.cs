@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<MvcEnvironmentMusicContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("MvcEnvironmentMusicContext")));
+
 builder.Services.AddDbContext<MvcBuildingAnimSettingContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("MvcBuildingAnimSettingContext")));
 

@@ -59,6 +59,9 @@ namespace google_sheet_api_service.Controllers
             return View();
         }
 
+        public string RequestIslandJson()
+            => JsonConvert.SerializeObject(_logic.RequestIslandData());
+
         private async Task CreateOrUpdate(
             [Bind("Id,gId,islandName,imageKey,nameKey,descriptionKey,conclusionKey")] Island island
         )

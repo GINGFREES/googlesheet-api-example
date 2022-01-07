@@ -1,0 +1,89 @@
+@model IEnumerable<google_sheet_api_service.Models.EnvironmentMusic>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.islandGid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.islandName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.music)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isLoop)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.startDelay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isFadeLoop)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fadeLoopDelay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fadeOutDelay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fadeInOutDuration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fadeInOutEase)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.islandGid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.islandName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.music)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isLoop)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.startDelay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isFadeLoop)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fadeLoopDelay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fadeOutDelay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fadeInOutDuration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fadeInOutEase)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

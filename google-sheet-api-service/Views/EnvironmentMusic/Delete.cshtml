@@ -1,0 +1,81 @@
+@model google_sheet_api_service.Models.EnvironmentMusic
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>EnvironmentMusic</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.islandGid)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.islandGid)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.islandName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.islandName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.music)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.music)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.isLoop)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.isLoop)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.startDelay)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.startDelay)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.isFadeLoop)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.isFadeLoop)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.fadeLoopDelay)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.fadeLoopDelay)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.fadeOutDelay)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.fadeOutDelay)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.fadeInOutDuration)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.fadeInOutDuration)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.fadeInOutEase)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.fadeInOutEase)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
