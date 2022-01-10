@@ -1,5 +1,4 @@
 #nullable disable
-using System.Runtime.InteropServices.ComTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,30 +12,30 @@ using Newtonsoft.Json;
 
 namespace google_sheet_api_service.Controllers
 {
-    public class EnvironmentMusicController : Controller
+    public class SoundSettingController : Controller
     {
-        private readonly MvcEnvironmentMusicContext _context;
-        private EnvironmentMusicLogic _logic;
+        private readonly MvcSoundSettingContext _context;
+        private SoundSettingLogic _logic;
 
-        public EnvironmentMusicController(MvcEnvironmentMusicContext context)
+        public SoundSettingController(MvcSoundSettingContext context)
         {
             _context = context;
-            _logic = new EnvironmentMusicLogic();
+            _logic = new SoundSettingLogic();
         }
 
-        // GET: EnvironmentMusic
+        // GET: SoundSetting
         public async Task<IActionResult> Index()
         {
-            var list = _logic.RequestEnvironmentMusicData();
+            var list = _logic.RequestSoundSettingData();
             foreach (var target in list)
             {
                 await CreateOrUpdate(target);
                 Console.WriteLine($"Create or update {JsonConvert.SerializeObject(target)}");
             }
-            return View(await _context.EnvironmentMusic.ToListAsync());
+            return View(await _context.SoundSetting.ToListAsync());
         }
 
-        // GET: EnvironmentMusic/Details/5
+        // GET: SoundSetting/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,62 +43,63 @@ namespace google_sheet_api_service.Controllers
                 return NotFound();
             }
 
-            var environmentMusic = await _context.EnvironmentMusic
+            var soundSetting = await _context.SoundSetting
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (environmentMusic == null)
+            if (soundSetting == null)
             {
                 return NotFound();
             }
 
-            return View(environmentMusic);
+            return View(soundSetting);
         }
 
-        public string RquestEnvironmentMusicJson()
-            => JsonConvert.SerializeObject(_logic.RequestEnvironmentMusicData());
+        public string RequestSoundSettingJson()
+            => JsonConvert.SerializeObject(_logic.RequestSoundSettingData());
 
-        // GET: EnvironmentMusic/Create
+        // GET: SoundSetting/Create
         public IActionResult Create()
         {
             return View();
         }
 
         private async Task CreateOrUpdate(
-            [Bind("Id,islandGid,islandName,music,isLoop,startDelay,isFadeLoop,fadeLoopDelay,fadeOutDelay,fadeInOutDuration,fadeInOutEase")] EnvironmentMusic environmentMusic
+            [Bind("Id,islandGid,islandName,bgmVolume,windVolume,waveVolume,birdVolume,lakeVolume,bellVolume")] SoundSetting soundSetting
         )
         {
-            var target = await _context.EnvironmentMusic.FindAsync(environmentMusic.Id);
+            var target = await _context.SoundSetting.FindAsync(soundSetting.Id);
             if (target == null)
             {
                 if (ModelState.IsValid)
                 {
-                    _context.Add(environmentMusic);
+                    _context.Add(soundSetting);
                 }
             }
             else
             {
-                _context.EnvironmentMusic.Remove(target);
-                _context.Add(environmentMusic);
+                _context.SoundSetting.Remove(target);
+                _context.Add(soundSetting);
             }
+
             await _context.SaveChangesAsync();
         }
 
-        // POST: EnvironmentMusic/Create
+        // POST: SoundSetting/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,islandGid,islandName,music,isLoop,startDelay,isFadeLoop,fadeLoopDelay,fadeOutDelay,fadeInOutDuration,fadeInOutEase")] EnvironmentMusic environmentMusic)
+        public async Task<IActionResult> Create([Bind("Id,islandGid,islandName,bgmVolume,windVolume,waveVolume,birdVolume,lakeVolume,bellVolume")] SoundSetting soundSetting)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(environmentMusic);
+                _context.Add(soundSetting);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(environmentMusic);
+            return View(soundSetting);
         }
 
-        // GET: EnvironmentMusic/Edit/5
+        // GET: SoundSetting/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -107,22 +107,22 @@ namespace google_sheet_api_service.Controllers
                 return NotFound();
             }
 
-            var environmentMusic = await _context.EnvironmentMusic.FindAsync(id);
-            if (environmentMusic == null)
+            var soundSetting = await _context.SoundSetting.FindAsync(id);
+            if (soundSetting == null)
             {
                 return NotFound();
             }
-            return View(environmentMusic);
+            return View(soundSetting);
         }
 
-        // POST: EnvironmentMusic/Edit/5
+        // POST: SoundSetting/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,islandGid,islandName,music,isLoop,startDelay,isFadeLoop,fadeLoopDelay,fadeOutDelay,fadeInOutDuration,fadeInOutEase")] EnvironmentMusic environmentMusic)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,islandGid,islandName,bgmVolume,windVolume,waveVolume,birdVolume,lakeVolume,bellVolume")] SoundSetting soundSetting)
         {
-            if (id != environmentMusic.Id)
+            if (id != soundSetting.Id)
             {
                 return NotFound();
             }
@@ -131,12 +131,12 @@ namespace google_sheet_api_service.Controllers
             {
                 try
                 {
-                    _context.Update(environmentMusic);
+                    _context.Update(soundSetting);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EnvironmentMusicExists(environmentMusic.Id))
+                    if (!SoundSettingExists(soundSetting.Id))
                     {
                         return NotFound();
                     }
@@ -147,10 +147,10 @@ namespace google_sheet_api_service.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(environmentMusic);
+            return View(soundSetting);
         }
 
-        // GET: EnvironmentMusic/Delete/5
+        // GET: SoundSetting/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -158,30 +158,30 @@ namespace google_sheet_api_service.Controllers
                 return NotFound();
             }
 
-            var environmentMusic = await _context.EnvironmentMusic
+            var soundSetting = await _context.SoundSetting
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (environmentMusic == null)
+            if (soundSetting == null)
             {
                 return NotFound();
             }
 
-            return View(environmentMusic);
+            return View(soundSetting);
         }
 
-        // POST: EnvironmentMusic/Delete/5
+        // POST: SoundSetting/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var environmentMusic = await _context.EnvironmentMusic.FindAsync(id);
-            _context.EnvironmentMusic.Remove(environmentMusic);
+            var soundSetting = await _context.SoundSetting.FindAsync(id);
+            _context.SoundSetting.Remove(soundSetting);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EnvironmentMusicExists(int id)
+        private bool SoundSettingExists(int id)
         {
-            return _context.EnvironmentMusic.Any(e => e.Id == id);
+            return _context.SoundSetting.Any(e => e.Id == id);
         }
     }
 }

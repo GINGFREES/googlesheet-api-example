@@ -4,7 +4,7 @@ namespace google_sheet_api_service.Controllers.Logics
 {
     public class EnvironmentMusicLogic : IModelLogic
     {
-        public List<EnvironmentMusic> RequestEnvironmentMusic()
+        public List<EnvironmentMusic> RequestEnvironmentMusicData()
         {
             EnvironmentMusic environmentMusic =
                 new EnvironmentMusic();

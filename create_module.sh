@@ -9,7 +9,8 @@ MODEL_LIST=("Building" \
 "Island" \
 "Story" \
 "StoryDialogue" \
-"EnvironmentMusic")
+"EnvironmentMusic" \
+"SoundSetting")
 
 # dotnet-aspnet-codegenerator controller -name MoviesController -m Movie -dc MvcMovieContext --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries
 
@@ -28,7 +29,7 @@ cd google-sheet-api-service
 #     dotnet-aspnet-codegenerator controller -name ${CONTROLLER_NAME} -m ${MODEL_LIST[i]} -dc ${MVC_CONTEXT_NAME} --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries -sqlite
 # done
 
-MODEL_NAME="EnvironmentMusic"
+MODEL_NAME="SoundSetting"
 rm -rf Migrations/Mvc${MODEL_NAME}*
 CONTROLLER_NAME="${MODEL_NAME}Controller"
 MVC_CONTEXT_NAME="Mvc${MODEL_NAME}Context"

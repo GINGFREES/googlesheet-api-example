@@ -1,0 +1,69 @@
+@model google_sheet_api_service.Models.SoundSetting
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>SoundSetting</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="islandGid" class="control-label"></label>
+                <input asp-for="islandGid" class="form-control" />
+                <span asp-validation-for="islandGid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="islandName" class="control-label"></label>
+                <input asp-for="islandName" class="form-control" />
+                <span asp-validation-for="islandName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="bgmVolume" class="control-label"></label>
+                <input asp-for="bgmVolume" class="form-control" />
+                <span asp-validation-for="bgmVolume" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="windVolume" class="control-label"></label>
+                <input asp-for="windVolume" class="form-control" />
+                <span asp-validation-for="windVolume" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="waveVolume" class="control-label"></label>
+                <input asp-for="waveVolume" class="form-control" />
+                <span asp-validation-for="waveVolume" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="birdVolume" class="control-label"></label>
+                <input asp-for="birdVolume" class="form-control" />
+                <span asp-validation-for="birdVolume" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="lakeVolume" class="control-label"></label>
+                <input asp-for="lakeVolume" class="form-control" />
+                <span asp-validation-for="lakeVolume" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="bellVolume" class="control-label"></label>
+                <input asp-for="bellVolume" class="form-control" />
+                <span asp-validation-for="bellVolume" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

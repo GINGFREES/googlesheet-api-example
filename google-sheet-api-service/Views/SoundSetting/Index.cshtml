@@ -1,0 +1,77 @@
+@model IEnumerable<google_sheet_api_service.Models.SoundSetting>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.islandGid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.islandName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.bgmVolume)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.windVolume)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.waveVolume)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.birdVolume)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.lakeVolume)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.bellVolume)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.islandGid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.islandName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.bgmVolume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.windVolume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.waveVolume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.birdVolume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lakeVolume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.bellVolume)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
